@@ -12,8 +12,6 @@ export default function Home() {
   const [exportsCount, setExportsCount] = useState(15); // Exports count
   const [complianceCount, setComplianceCount] = useState(3); // Compliance count
   const [documentsCount, setDocumentsCount] = useState(8); // Documents count
-  const [completedOrders, setCompletedOrders] = useState(10); // Completed Orders count
-  const [remainingOrders, setRemainingOrders] = useState(5); // Remaining Orders count
 
   // Sample chart data based on Key Statistics (Exports, Compliance, Documents)
   const chartData = {
@@ -42,11 +40,6 @@ export default function Home() {
 
   // Toggle theme function
   const toggleTheme = () => setTheme(theme === 'dark' ? 'light' : 'dark');
-
-  // Update the chart data dynamically whenever the statistics change
-  useEffect(() => {
-    // The chart will automatically update when the following states change
-  }, [exportsCount, complianceCount, documentsCount]);
 
   return (
     <div className={`${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'} min-h-screen`}>
