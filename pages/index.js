@@ -1,114 +1,113 @@
-import Image from "next/image";
-import localFont from "next/font/local";
+import Navbar from '../components/Navbar';
+import DashboardCard from '../components/DashboardCard';
+import { Line } from 'react-chartjs-2';
+import { useState, useEffect } from 'react';
+import { Chart, CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend } from 'chart.js';
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+// Register the necessary Chart.js components
+Chart.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend);
 
 export default function Home() {
-  return (
-    <div
-      className={`${geistSans.variable} ${geistMono.variable} grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]`}
-    >
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              pages/index.js
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [theme, setTheme] = useState('dark'); // Theme toggle
+  const [exportsCount, setExportsCount] = useState(15); // Exports count
+  const [complianceCount, setComplianceCount] = useState(3); // Compliance count
+  const [documentsCount, setDocumentsCount] = useState(8); // Documents count
+  const [completedOrders, setCompletedOrders] = useState(10); // Completed Orders count
+  const [remainingOrders, setRemainingOrders] = useState(5); // Remaining Orders count
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+  // Sample chart data based on Key Statistics (Exports, Compliance, Documents)
+  const chartData = {
+    labels: ['Exports', 'Compliance', 'Documents'],
+    datasets: [
+      {
+        label: 'Key Statistics',
+        data: [exportsCount, complianceCount, documentsCount], // Dynamically updated values
+        borderColor: '#4caf50',
+        backgroundColor: 'rgba(76, 175, 80, 0.2)',
+        fill: true,
+      },
+    ],
+  };
+
+  const chartOptions = {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+    },
+    scales: {
+      x: { grid: { display: false } },
+      y: { grid: { color: '#555' }, ticks: { color: '#aaa' } },
+    },
+  };
+
+  // Toggle theme function
+  const toggleTheme = () => setTheme(theme === 'dark' ? 'light' : 'dark');
+
+  // Update the chart data dynamically whenever the statistics change
+  useEffect(() => {
+    // The chart will automatically update when the following states change
+  }, [exportsCount, complianceCount, documentsCount]);
+
+  return (
+    <div className={`${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'} min-h-screen`}>
+      <Navbar />
+      <header className="flex justify-between items-center p-6">
+        <h1 className="text-3xl font-bold">Advanced Dashboard</h1>
+        <button
+          onClick={toggleTheme}
+          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all"
+        >
+          Toggle {theme === 'dark' ? 'Light' : 'Dark'} Mode
+        </button>
+      </header>
+      <main className="container mx-auto p-4">
+        {/* Statistics Section */}
+        <section>
+          <h2 className="text-2xl font-semibold mb-4">Key Statistics</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <DashboardCard
+              title="Exports"
+              initialData={{ count: exportsCount, status: 'in-progress' }}
+              onChange={(newCount) => setExportsCount(newCount)} // Allow user to update Exports count
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
+            <DashboardCard
+              title="Compliance"
+              initialData={{ count: complianceCount, status: 'compliant' }}
+              onChange={(newCount) => setComplianceCount(newCount)} // Allow user to update Compliance count
+            />
+            <DashboardCard
+              title="Documents"
+              initialData={{ count: documentsCount, status: 'pending' }}
+              onChange={(newCount) => setDocumentsCount(newCount)} // Allow user to update Documents count
+            />
+          </div>
+        </section>
+
+        {/* Chart Section */}
+        <section className="mt-8">
+          <h2 className="text-2xl font-semibold mb-4">Performance Overview</h2>
+          <div className="bg-gradient-to-br from-gray-800 via-gray-900 to-black p-6 rounded-lg shadow-lg">
+            <Line data={chartData} options={chartOptions} />
+          </div>
+        </section>
+
+        {/* Live Updates Section */}
+        <section className="mt-8">
+          <h2 className="text-2xl font-semibold mb-4">Live Updates</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <DashboardCard
+              title="Active Queries"
+              initialData={{ count: 7, status: 'critical' }}
+            />
+            <DashboardCard
+              title="Pending Shipments"
+              initialData={{ count: 12, status: 'delayed' }}
+            />
+          </div>
+        </section>
       </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=default-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+      <footer className="text-center py-4 mt-8 bg-gray-800 text-gray-400">
+        &copy; 2024 Export Management Platform
       </footer>
     </div>
   );

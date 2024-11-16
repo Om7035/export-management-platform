@@ -19,3 +19,25 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+/* In your global stylesheet */
+.map-container {
+  height: 500px; /* Adjust as needed */
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
