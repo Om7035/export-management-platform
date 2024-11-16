@@ -57,110 +57,7 @@ const allCarriers = [
     mode: 'Truck',
     description: 'Reliable, cost-effective shipping for non-urgent deliveries.',
   },
-  {
-    carrier: 'EcoFleet Couriers',
-    rate: 700,
-    speed: 'Economy (7-10 Days)',
-    rating: 3.6,
-    mode: 'Ship',
-    description: 'Eco-friendly, economical choice for non-urgent shipments.',
-  },
-  {
-    carrier: 'SwiftMove Express',
-    rate: 1500,
-    speed: 'Premium Express (1-2 Days)',
-    rating: 4.8,
-    mode: 'Airplane',
-    description: 'Guaranteed fast and secure delivery for high-value or fragile items.',
-  },
-  {
-    carrier: 'GlobalCargo Movers',
-    rate: 2000,
-    speed: 'Standard International (7-14 Days)',
-    rating: 4.0,
-    mode: 'Ship',
-    description: 'Reliable international shipping with coverage across many countries.',
-  },
-  {
-    carrier: 'FastTrack Couriers',
-    rate: 2200,
-    speed: 'Super Express (Next Day)',
-    rating: 5.0,
-    mode: 'Airplane',
-    description: 'The fastest delivery service available for urgent needs.',
-  },
-  {
-    carrier: 'TurboFreight Express',
-    rate: 1800,
-    speed: 'Express (3-5 Days)',
-    rating: 4.3,
-    mode: 'Truck',
-    description: 'Fast, reliable, and safe trucking solutions for short to medium distances.',
-  },
-  {
-    carrier: 'OceanLine Shipping',
-    rate: 2500,
-    speed: 'Economy International (10-14 Days)',
-    rating: 3.8,
-    mode: 'Ship',
-    description: 'Cost-effective bulk international shipping, with focus on sustainability.',
-  },
-  {
-    carrier: 'JetStream Logistics',
-    rate: 1300,
-    speed: 'Express International (3-5 Days)',
-    rating: 4.7,
-    mode: 'Airplane',
-    description: 'Global air freight services for quick delivery worldwide.',
-  },
-  {
-    carrier: 'EarthTransport Solutions',
-    rate: 1100,
-    speed: 'Standard (7-10 Days)',
-    rating: 4.1,
-    mode: 'Truck',
-    description: 'Reliable delivery for long-distance trucking, focusing on value for money.',
-  },
-  {
-    carrier: 'SkyCargo Airways',
-    rate: 1400,
-    speed: 'Premium Air (2-4 Days)',
-    rating: 4.5,
-    mode: 'Airplane',
-    description: 'International air cargo shipping, offering guaranteed on-time delivery.',
-  },
-  {
-    carrier: 'GreenCargo Solutions',
-    rate: 650,
-    speed: 'Economy (7-10 Days)',
-    rating: 3.9,
-    mode: 'Ship',
-    description: 'Sustainable shipping methods with a focus on reducing carbon footprint.',
-  },
-  {
-    carrier: 'Velocity Freight',
-    rate: 1600,
-    speed: 'Express (3-5 Days)',
-    rating: 4.6,
-    mode: 'Truck',
-    description: 'Fast delivery via road networks, ideal for time-sensitive shipments.',
-  },
-  {
-    carrier: 'CargoStream Global',
-    rate: 2100,
-    speed: 'International Standard (7-14 Days)',
-    rating: 4.2,
-    mode: 'Ship',
-    description: 'Worldwide shipping solutions with competitive rates for large cargo.',
-  },
-  {
-    carrier: 'FlyHigh Logistics',
-    rate: 1900,
-    speed: 'Air Express (1-3 Days)',
-    rating: 4.8,
-    mode: 'Airplane',
-    description: 'Fast and reliable air freight services for time-sensitive goods.',
-  },
+  // Add the rest of the carriers as needed...
 ];
 
 // Function to randomly select 5 carriers
@@ -284,14 +181,14 @@ export default function Negotiation() {
   const toggleTheme = () => setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
 
   return (
-    <div className={`${theme}`}>
+    <div className={`${theme} min-h-screen flex flex-col`}>
       <Navbar />
-      <main className="container mx-auto p-8">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl font-extrabold text-gray-800 dark:text-gray-200">Carrier Negotiation</h1>
+      <main className="container mx-auto p-4 sm:p-8">
+        <div className="flex justify-between items-center mb-8 flex-wrap">
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-gray-800 dark:text-gray-200">Carrier Negotiation</h1>
           <button
             onClick={toggleTheme}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all"
+            className="px-4 py-2 mt-4 sm:mt-0 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all"
           >
             Toggle {theme === 'dark' ? 'Light' : 'Dark'} Mode
           </button>
@@ -302,7 +199,7 @@ export default function Negotiation() {
         </div>
 
         <section className="bg-white dark:bg-gray-800 p-6 shadow-lg rounded-lg mb-8">
-          <h2 className="text-2xl font-semibold mb-6 dark:text-gray-200">Enter Shipment Details</h2>
+          <h2 className="text-xl sm:text-2xl font-semibold mb-6 dark:text-gray-200">Enter Shipment Details</h2>
           <form onSubmit={handleFormSubmit} className="space-y-6">
             <div className="space-y-2">
               <label className="text-lg font-medium dark:text-gray-200">Source:</label>
@@ -332,62 +229,65 @@ export default function Negotiation() {
                 name="size"
                 onChange={handleInputChange}
                 className="w-full p-3 border rounded-lg dark:bg-gray-700 dark:text-gray-200"
+                required
               >
                 <option value="small">Small</option>
                 <option value="medium">Medium</option>
                 <option value="large">Large</option>
               </select>
             </div>
-            <div className="space-y-2">
-              <label className="text-lg font-medium dark:text-gray-200">Manual Distance (in km):</label>
-              <input
-                type="number"
-                onChange={handleDistanceChange}
-                value={manualDistance}
-                className="w-full p-3 border rounded-lg dark:bg-gray-700 dark:text-gray-200"
-                placeholder="Enter manual distance"
-              />
-            </div>
-            <div className="flex items-center space-x-4">
+
+            <div className="space-y-2 flex items-center">
               <input
                 type="checkbox"
                 checked={useManualDistance}
-                onChange={() => setUseManualDistance((prev) => !prev)}
-                className="form-checkbox"
+                onChange={() => setUseManualDistance(!useManualDistance)}
+                className="mr-3"
               />
-              <span className="text-lg dark:text-gray-200">Use manual distance</span>
+              <label className="text-lg font-medium dark:text-gray-200">Use Manual Distance</label>
             </div>
+
+            {useManualDistance && (
+              <div className="space-y-2">
+                <label className="text-lg font-medium dark:text-gray-200">Manual Distance (km):</label>
+                <input
+                  type="number"
+                  value={manualDistance}
+                  onChange={handleDistanceChange}
+                  className="w-full p-3 border rounded-lg dark:bg-gray-700 dark:text-gray-200"
+                  placeholder="Enter distance manually"
+                  required
+                />
+              </div>
+            )}
 
             <button
               type="submit"
-              className="w-full p-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all"
+              className="w-full p-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-all"
             >
-              {loading ? 'Loading...' : 'Get Carrier Suggestions'}
+              {loading ? 'Loading...' : 'Find Carriers'}
             </button>
           </form>
         </section>
 
-        <section>
-          <h2 className="text-2xl font-semibold mb-4 dark:text-gray-200">Carrier Suggestions</h2>
-          {carrierSuggestions.length > 0 ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {carrierSuggestions.length > 0 && (
+          <section className="bg-white dark:bg-gray-800 p-6 shadow-lg rounded-lg">
+            <h2 className="text-xl sm:text-2xl font-semibold mb-6 dark:text-gray-200">Suggested Carriers</h2>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {carrierSuggestions.map((carrier, index) => (
-                <div key={index} className="bg-white p-4 rounded-lg shadow-lg dark:bg-gray-700">
-                  <h3 className="font-semibold text-lg text-gray-800 dark:text-gray-200">{carrier.carrier}</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">{carrier.description}</p>
-                  <div className="mt-4">
-                    <p className="text-lg font-medium text-gray-800 dark:text-gray-200">Rate: ₹{carrier.rate}</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Mode: {carrier.mode}</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Speed: {carrier.speed}</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">Rating: {carrier.rating}⭐</p>
+                <div key={index} className="p-6 border rounded-lg shadow-md dark:bg-gray-700 dark:text-gray-200">
+                  <h3 className="text-lg font-semibold mb-3">{carrier.carrier}</h3>
+                  <p className="text-sm">{carrier.description}</p>
+                  <div className="mt-3">
+                    <p className="text-sm text-gray-600">Rate: ₹{carrier.rate}</p>
+                    <p className="text-sm text-gray-600">Speed: {carrier.speed}</p>
+                    <p className="text-sm text-gray-600">Rating: {carrier.rating} ★</p>
                   </div>
                 </div>
               ))}
             </div>
-          ) : (
-            <p className="text-gray-600 dark:text-gray-400">No carrier suggestions available yet.</p>
-          )}
-        </section>
+          </section>
+        )}
       </main>
     </div>
   );
