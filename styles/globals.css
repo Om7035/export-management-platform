@@ -41,3 +41,23 @@ button {
 button:hover {
   background-color: #45a049;
 }
+
+@media (max-width: 768px) {
+  body {
+    font-size: 16px; /* Adjust font size for mobile */
+  }
+  
+  .map-container {
+    height: 300px; /* Reduce height for smaller screens */
+  }
+
+  h1 {
+    font-size: 1.5em; /* Adjust heading size for mobile */
+    margin-bottom: 15px; /* Reduce margin */
+  }
+
+  button {
+    width: 100%; /* Make buttons full width */
+    padding: 15px; /* Increase padding for touch targets */
+  }
+}
