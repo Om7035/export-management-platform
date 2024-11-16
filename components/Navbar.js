@@ -45,13 +45,16 @@ export default function Navbar() {
         <div 
           className={`lg:hidden absolute top-0 left-0 w-full bg-blue-500 p-4 transition-transform transform ${isMenuOpen ? 'translate-y-0' : '-translate-y-full'}`}
         >
-          <div className="flex flex-col space-y-4">
-            <Link href="/" onClick={toggleMenu}>Dashboard</Link>
-            <Link href="/orders" onClick={toggleMenu}>Orders</Link>
-            <Link href="/documents" onClick={toggleMenu}>Documents</Link>
-            <Link href="/negotiation" onClick={toggleMenu}>Negotiation</Link>
-            <Link href="/support" onClick={toggleMenu}>Support</Link>
-          </div>
+          <div className="container mx-auto flex justify-between items-center">
+          <h1 className="text-2xl font-bold mb-1">Export Management</h1>
+          <div className="space-x-4 flex items-center">
+          <Link href="/" className={router.pathname === '/' ? 'font-bold' : ''}>Dashboard</Link>
+          <Link href="/orders" className={router.pathname === '/orders' ? 'font-bold' : ''}>Orders</Link>
+          <Link href="/documents" className={router.pathname === '/documents' ? 'font-bold' : ''}>Documents</Link>
+          <Link href="/negotiation" className={router.pathname === '/negotiation' ? 'font-bold' : ''}>Negotiation</Link>
+          <Link href="/support" className={router.pathname === '/support' ? 'font-bold' : ''}>Support</Link>
+        </div>
+      </div>
         </div>
       </div>
     </nav>
