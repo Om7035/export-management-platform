@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Navbar from '../components/Navbar';
 import axios from 'axios';
 
-const OPENCAGE_API_KEY = 'b9f3da6e937e474f8b13be4b3c0c0772'; // Replace with your OpenCage API key
+const OPENCAGE_API_KEY = 'b9f3da6e937e474f8b13be4b3c0c0772'; 
 
 // Function to calculate distance between two coordinates using the Haversine formula
 const calculateDistance = (lat1, lon1, lat2, lon2) => {
