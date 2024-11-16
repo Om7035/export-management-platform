@@ -121,17 +121,17 @@ export default function ChatWindow() {
           </div>
 
           {/* Input Area */}
-          <div className="mt-4 flex">
+          <div className="mt-4 flex flex-col sm:flex-row">
             <input
               type="text"
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
-              className="w-full p-3 bg-gray-700 text-white rounded-l-md focus:outline-none"
+              className="w-full sm:w-3/4 p-3 bg-gray-700 text-white rounded-l-md focus:outline-none"
               placeholder="Type your message..."
             />
             <button
               onClick={handleSendMessage}
-              className="bg-blue-500 p-3 text-white rounded-r-md hover:bg-blue-600"
+              className="bg-blue-500 p-3 text-white rounded-r-md sm:ml-2 mt-2 sm:mt-0 hover:bg-blue-600"
             >
               Send
             </button>
