@@ -52,7 +52,7 @@ export default function Home() {
     <div className={`${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-gray-100 text-gray-900'} min-h-screen`}>
       <Navbar />
       <header className="flex justify-between items-center p-6">
-        <h1 className="text-3xl font-bold">Advanced Dashboard</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold">Advanced Dashboard</h1>
         <button
           onClick={toggleTheme}
           className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all"
@@ -63,8 +63,8 @@ export default function Home() {
       <main className="container mx-auto p-4">
         {/* Statistics Section */}
         <section>
-          <h2 className="text-2xl font-semibold mb-4">Key Statistics</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <h2 className="text-xl sm:text-2xl font-semibold mb-4">Key Statistics</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <DashboardCard
               title="Exports"
               initialData={{ count: exportsCount, status: 'in-progress' }}
@@ -85,7 +85,7 @@ export default function Home() {
 
         {/* Chart Section */}
         <section className="mt-8">
-          <h2 className="text-2xl font-semibold mb-4">Performance Overview</h2>
+          <h2 className="text-xl sm:text-2xl font-semibold mb-4">Performance Overview</h2>
           <div className="bg-gradient-to-br from-gray-800 via-gray-900 to-black p-6 rounded-lg shadow-lg">
             <Line data={chartData} options={chartOptions} />
           </div>
@@ -93,8 +93,8 @@ export default function Home() {
 
         {/* Live Updates Section */}
         <section className="mt-8">
-          <h2 className="text-2xl font-semibold mb-4">Live Updates</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <h2 className="text-xl sm:text-2xl font-semibold mb-4">Live Updates</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6">
             <DashboardCard
               title="Active Queries"
               initialData={{ count: 7, status: 'critical' }}
