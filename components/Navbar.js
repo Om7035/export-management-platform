@@ -1,10 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router'; // Import useRouter
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const router = useRouter(); // Initialize router
+  const [currentPath, setCurrentPath] = useState("");
+
+  const router = useRouter();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setCurrentPath(router.pathname); // Set the current path only on the client
+    }
+  }, [router.pathname]);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -36,11 +44,21 @@ export default function Navbar() {
 
         {/* Desktop links */}
         <div className="space-x-4 hidden lg:flex items-center">
-          <Link href="/" className={router.pathname === '/' ? 'font-bold' : ''}>Dashboard</Link>
-          <Link href="/orders" className={router.pathname === '/orders' ? 'font-bold' : ''}>Orders</Link>
-          <Link href="/documents" className={router.pathname === '/documents' ? 'font-bold' : ''}>Documents</Link>
-          <Link href="/negotiation" className={router.pathname === '/negotiation' ? 'font-bold' : ''}>Negotiation</Link>
-          <Link href="/support" className={router.pathname === '/support' ? 'font-bold' : ''}>Support</Link>
+          <Link href="/" className={currentPath === '/' ? 'font-bold' : ''}>
+            Dashboard
+          </Link>
+          <Link href="/orders" className={currentPath === '/orders' ? 'font-bold' : ''}>
+            Orders
+          </Link>
+          <Link href="/documents" className={currentPath === '/documents' ? 'font-bold' : ''}>
+            Documents
+          </Link>
+          <Link href="/negotiation" className={currentPath === '/negotiation' ? 'font-bold' : ''}>
+            Negotiation
+          </Link>
+          <Link href="/support" className={currentPath === '/support' ? 'font-bold' : ''}>
+            Support
+          </Link>
         </div>
 
         {/* Mobile menu */}
@@ -51,11 +69,21 @@ export default function Navbar() {
         >
           <div className="container mx-auto flex flex-col items-start space-y-2">
             <h1 className="text-2xl font-bold mb-1">Export Management</h1>
-            <Link href="/" className={router.pathname === '/' ? 'font-bold' : ''}>Dashboard</Link>
-            <Link href="/orders" className={router.pathname === '/orders' ? 'font-bold' : ''}>Orders</Link>
-            <Link href="/documents" className={router.pathname === '/documents' ? 'font-bold' : ''}>Documents</Link>
-            <Link href="/negotiation" className={router.pathname === '/negotiation' ? 'font-bold' : ''}>Negotiation</Link>
-            <Link href="/support" className={router.pathname === '/support' ? 'font-bold' : ''}>Support</Link>
+            <Link href="/" className={currentPath === '/' ? 'font-bold' : ''}>
+              Dashboard
+            </Link>
+            <Link href="/orders" className={currentPath === '/orders' ? 'font-bold' : ''}>
+              Orders
+            </Link>
+            <Link href="/documents" className={currentPath === '/documents' ? 'font-bold' : ''}>
+              Documents
+            </Link>
+            <Link href="/negotiation" className={currentPath === '/negotiation' ? 'font-bold' : ''}>
+              Negotiation
+            </Link>
+            <Link href="/support" className={currentPath === '/support' ? 'font-bold' : ''}>
+              Support
+            </Link>
           </div>
         </div>
       </div>
