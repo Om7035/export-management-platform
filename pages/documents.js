@@ -3,14 +3,22 @@ import { useState, useEffect } from 'react';
 
 export default function Documents() {
   const [documents, setDocuments] = useState([]);
-  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark');
+  const [theme, setTheme] = useState('dark'); // Default to 'dark' initially
   const [error, setError] = useState(null);
+
+  // Check for client-side rendering before accessing localStorage
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      setTheme(savedTheme);
+    }
+  }, []); // Run only once on the client side
 
   // Toggle theme and persist in localStorage
   const toggleTheme = () => {
     const newTheme = theme === 'dark' ? 'light' : 'dark';
     setTheme(newTheme);
-    localStorage.setItem('theme', newTheme);
+    localStorage.setItem('theme', newTheme); // Store the theme in localStorage
   };
 
   // Handle document upload
@@ -72,9 +80,7 @@ export default function Documents() {
 
   return (
     <div
-      className={`min-h-screen transition-colors duration-500 ${
-        theme === 'dark' ? 'bg-gray-900' : 'bg-gray-100'
-      }`}
+      className={`min-h-screen transition-colors duration-500 ${theme === 'dark' ? 'bg-gray-900' : 'bg-gray-100'}`}
     >
       <Navbar />
       <main className="container mx-auto py-8 px-4">
@@ -112,9 +118,7 @@ export default function Documents() {
               type="file"
               onChange={handleUpload}
               className={`block w-full md:w-auto text-sm ${
-                theme === 'dark'
-                  ? 'bg-gray-700 text-white border-gray-600'
-                  : 'bg-gray-50 text-gray-700 border-gray-300'
+                theme === 'dark' ? 'bg-gray-700 text-white border-gray-600' : 'bg-gray-50 text-gray-700 border-gray-300'
               } border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500`}
             />
           </div>
