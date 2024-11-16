@@ -61,3 +61,20 @@ button:hover {
     padding: 15px; /* Increase padding for touch targets */
   }
 }
+.map-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;  /* Full height of the viewport */
+}
+
+@media (max-width: 768px) {
+  .map-container {
+    height: 60vh; /* Adjust map height for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .map-container {
+    height: 50vh; /* Further adjust map height for very small screens */
+  }
+}
