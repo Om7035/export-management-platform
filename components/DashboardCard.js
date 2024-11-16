@@ -1,19 +1,17 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 
 export default function DashboardCard({ title, initialData, onUpdateData }) {
   const [data, setData] = useState(initialData);
   const [isEditing, setIsEditing] = useState(false);
 
-  // Handle changes to the data fields
   const handleChange = (field, value) => {
     setData((prevData) => ({ ...prevData, [field]: value }));
   };
 
-  // Save the changes and update the parent component
   const handleSave = () => {
     setIsEditing(false);
-    onUpdateData(data); // Call parent function to update the state in Orders
+    onUpdateData(data); // Call parent function to update the state
   };
 
   return (
@@ -68,10 +66,9 @@ export default function DashboardCard({ title, initialData, onUpdateData }) {
 
       <button
         onClick={() => setIsEditing((prev) => !prev)}
-        className={`absolute top-3 right-3 ${isEditing ? 'bg-gray-500 hover:bg-gray-600' : 'bg-blue-500 hover:bg-blue-600'} text-white rounded-full px-3 py-1`}
-        title={isEditing ? 'Cancel Edit' : 'Edit Data'}
+        className={`absolute top-3 right-3 ${isEditing ? 'bg-gray-500 hover:bg-gray-600' : 'bg-blue-600 hover:bg-blue-700'} px-2 py-1 rounded-full text-white`}
       >
-        {isEditing ? '✖' : '✏'}
+        {isEditing ? 'Cancel' : 'Edit'}
       </button>
     </motion.div>
   );
