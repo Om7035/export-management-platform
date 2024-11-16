@@ -1,9 +1,12 @@
 import { useState } from "react";
-import Map from "../components/Map"; // Import the Map component
+import dynamic from "next/dynamic"; // Import dynamic from Next.js for client-side rendering
 import { motion } from "framer-motion";
 import Navbar from "../components/Navbar"; // Import Navbar component
 import { FaTruck, FaCheckCircle, FaRegClock, FaSun, FaMoon } from "react-icons/fa"; // Import icons for statuses
 import DashboardCard from "../components/DashboardCard"; // Import DashboardCard
+
+// Dynamically import Map component to prevent SSR issues
+const Map = dynamic(() => import("../components/Map"), { ssr: false });
 
 export default function Orders() {
   const [shipmentId, setShipmentId] = useState("");
