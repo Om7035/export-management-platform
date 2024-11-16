@@ -38,10 +38,8 @@ const fetchCoordinates = async (location) => {
     throw error;
   }
 };
+
 // Simulated fetch function for carrier suggestions with refined realistic rates
-// Simulated fetch function for carrier suggestions with more realistic factors
-// Simulated fetch function for carrier suggestions with transportation modes
-// Expanded carrier pool with different transportation modes
 const allCarriers = [
   {
     carrier: 'BlueExpress Logistics',
@@ -168,7 +166,7 @@ const allCarriers = [
 // Function to randomly select 5 carriers
 const fetchCarrierSuggestions = async (shipmentDetails) => {
   const { size, distance, source, destination } = shipmentDetails;
-  
+
   const baseRates = {
     small: 500, // base rate for small packages
     medium: 1000, // base rate for medium packages
@@ -193,7 +191,7 @@ const fetchCarrierSuggestions = async (shipmentDetails) => {
 
   // Filter out carriers that don't match certain criteria (e.g., mode or destination)
   const filteredCarriers = carriers.filter((carrier) => {
-    if (destination === "International" && carrier.mode !== 'Ship') {
+    if (destination === 'International' && carrier.mode !== 'Ship') {
       return false; // Only ships can handle international large shipments
     }
     return true;
@@ -210,9 +208,6 @@ const fetchCarrierSuggestions = async (shipmentDetails) => {
   return randomCarriers;
 };
 
-
-
-
 export default function Negotiation() {
   const [carrierSuggestions, setCarrierSuggestions] = useState([]);
   const [shipmentDetails, setShipmentDetails] = useState({
@@ -221,9 +216,9 @@ export default function Negotiation() {
     size: 'small',
     distance: 0,
   });
-  const [distance, setDistance] = useState(null); // Added state for distance
-  const [manualDistance, setManualDistance] = useState(''); // Added state for manual distance input
-  const [useManualDistance, setUseManualDistance] = useState(false); // State for switching between auto and manual distance
+  const [distance, setDistance] = useState(null);
+  const [manualDistance, setManualDistance] = useState('');
+  const [useManualDistance, setUseManualDistance] = useState(false);
   const [theme, setTheme] = useState('light');
   const [loading, setLoading] = useState(false);
 
@@ -274,7 +269,7 @@ export default function Negotiation() {
       // Update shipment details with calculated or manual distance
       const updatedDetails = { source, destination, size, distance: useManualDistance ? manualDistance : calculatedDistance };
       setShipmentDetails(updatedDetails);
-      setDistance(useManualDistance ? manualDistance : calculatedDistance.toFixed(2)); // Store distance in state
+      setDistance(useManualDistance ? manualDistance : calculatedDistance.toFixed(2));
 
       // Fetch carrier suggestions
       const carriers = await fetchCarrierSuggestions(updatedDetails);
@@ -302,7 +297,6 @@ export default function Negotiation() {
           </button>
         </div>
 
-        {/* Disclaimer */}
         <div className="text-sm text-red-700 font-semibold mb-8">
           *Please note: This model is still under development, and the calculated distance may not be accurate.
         </div>
@@ -333,91 +327,67 @@ export default function Negotiation() {
               />
             </div>
             <div className="space-y-2">
-              <label className="text-lg font-medium dark:text-gray-200">Shipment Size:</label>
+              <label className="text-lg font-medium dark:text-gray-200">Package Size:</label>
               <select
                 name="size"
                 onChange={handleInputChange}
                 className="w-full p-3 border rounded-lg dark:bg-gray-700 dark:text-gray-200"
-                required
               >
                 <option value="small">Small</option>
                 <option value="medium">Medium</option>
                 <option value="large">Large</option>
               </select>
             </div>
+            <div className="space-y-2">
+              <label className="text-lg font-medium dark:text-gray-200">Manual Distance (in km):</label>
+              <input
+                type="number"
+                onChange={handleDistanceChange}
+                value={manualDistance}
+                className="w-full p-3 border rounded-lg dark:bg-gray-700 dark:text-gray-200"
+                placeholder="Enter manual distance"
+              />
+            </div>
             <div className="flex items-center space-x-4">
               <input
                 type="checkbox"
+                checked={useManualDistance}
                 onChange={() => setUseManualDistance((prev) => !prev)}
-                className="h-5 w-5 text-blue-600"
+                className="form-checkbox"
               />
-              <label className="text-lg font-medium dark:text-gray-200">Use Manual Distance</label>
+              <span className="text-lg dark:text-gray-200">Use manual distance</span>
             </div>
-            {useManualDistance && (
-              <div className="space-y-2">
-                <label className="text-lg font-medium dark:text-gray-200">Enter Distance (in km):</label>
-                <input
-                  type="number"
-                  value={manualDistance}
-                  onChange={handleDistanceChange}
-                  className="w-full p-3 border rounded-lg dark:bg-gray-700 dark:text-gray-200"
-                  placeholder="Enter distance in km"
-                  required
-                />
-              </div>
-            )}
+
             <button
               type="submit"
-              className="w-full p-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all"
+              className="w-full p-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-all"
             >
-              Calculate and Suggest Carriers
+              {loading ? 'Loading...' : 'Get Carrier Suggestions'}
             </button>
           </form>
         </section>
 
-        {loading ? (
-          <div className="text-center text-lg text-gray-800 dark:text-gray-200">Loading...</div>
-        ) : (
-          <>
-            {distance && (
-              <div className="mb-8 text-lg text-gray-800 dark:text-gray-200">
-                <p>Approximate Distance: {distance} km</p>
-              </div>
-            )}
-
-            <section className="bg-white dark:bg-gray-800 p-6 shadow-lg rounded-lg">
-              <h2 className="text-2xl font-semibold mb-6 dark:text-gray-200">Carrier Suggestions</h2>
-              <table className="min-w-full table-auto">
-                <thead>
-                  <tr className="bg-gray-100 dark:bg-gray-700">
-                    <th className="px-6 py-3">Carrier</th>
-                    <th className="px-6 py-3">Rate (INR)</th>
-                    <th className="px-6 py-3">Speed</th>
-                    <th className="px-6 py-3">Rating</th>
-                    <th className="px-6 py-3">Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {carrierSuggestions.length > 0 ? (
-                    carrierSuggestions.map((carrier, index) => (
-                      <tr key={index} className="border-t">
-                        <td className="px-6 py-3">{carrier.carrier}</td>
-                        <td className="px-6 py-3">{carrier.rate}</td>
-                        <td className="px-6 py-3">{carrier.speed}</td>
-                        <td className="px-6 py-3">{carrier.rating}</td>
-                        <td className="px-6 py-3">{carrier.description}</td>
-                      </tr>
-                    ))
-                  ) : (
-                    <tr>
-                      <td className="px-6 py-3" colSpan="5">No carrier suggestions available.</td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </section>
-          </>
-        )}
+        <section>
+          <h2 className="text-2xl font-semibold mb-4 dark:text-gray-200">Carrier Suggestions</h2>
+          {carrierSuggestions.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {carrierSuggestions.map((carrier, index) => (
+                <div key={index} className="bg-white p-4 rounded-lg shadow-lg dark:bg-gray-700">
+                  <h3 className="font-semibold text-lg text-gray-800 dark:text-gray-200">{carrier.carrier}</h3>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">{carrier.description}</p>
+                  <div className="mt-4">
+                    <p className="text-lg font-medium text-gray-800 dark:text-gray-200">Rate: ₹{carrier.rate}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">Mode: {carrier.mode}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">Speed: {carrier.speed}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">Rating: {carrier.rating}⭐</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-gray-600 dark:text-gray-400">No carrier suggestions available yet.</p>
+          )}
+        </section>
       </main>
     </div>
   );
