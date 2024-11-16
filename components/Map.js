@@ -24,24 +24,26 @@ const Map = ({ shipmentData }) => {
   });
 
   return (
-    <MapContainer
-      center={coordinates}
-      zoom={13}
-      scrollWheelZoom={false}
-      style={{ width: "100%", height: "100%" }}
-      whenCreated={(map) => (mapRef.current = map)}
-    >
-      <TileLayer
-        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-      />
-      <Marker position={coordinates} icon={pinIcon}>
-        <Popup>
-          <strong>{description}</strong><br />
-          {location}
-        </Popup>
-      </Marker>
-    </MapContainer>
+    <div className="map-container">
+      <MapContainer
+        center={coordinates}
+        zoom={13}
+        scrollWheelZoom={false}
+        style={{ width: "100%", height: "100%" }}
+        whenCreated={(map) => (mapRef.current = map)}
+      >
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        />
+        <Marker position={coordinates} icon={pinIcon}>
+          <Popup>
+            <strong>{description}</strong><br />
+            {location}
+          </Popup>
+        </Marker>
+      </MapContainer>
+    </div>
   );
 };
 
